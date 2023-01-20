@@ -1,4 +1,4 @@
-## Criando um projeto NodeJs
+# Criando um projeto NodeJs
 
 - A primeira configuração que deve ser feita é rodando o comando npm init -y 
 o -y é para ele responder sim para todas as perguntas e instalar diretamente.
@@ -20,13 +20,13 @@ vamos criar aplicações rest , api.
 - O node vem automaticamente com modulos internos para facilitar o trabalho com coisas que 
 que são muito comuns em aplicações back end, uma delas é o modulo de http.
 
-# Modulo de http 
+## Modulo de http 
 - Para importar esse modulo de http utilizamos      const http = require('http')
 
 - Esse modulo de http possue varias funcionalidades para construir aplicações HTTP 
 que são as api que serão construidas.
 
-# CommonJs / ESModules
+## CommonJs / ESModules
 - Para fazer essa importação utilizamos um padrão chamado CommonJS esse padrão de 
 importação utiliza o require porém hoje em dia utiliza-se muito um outro padrão que 
 são os ESModules que as importações e exportações utilizam o padrão import/export 
@@ -38,7 +38,7 @@ do http para     import http from 'http'
 - Para importação dos modulos internos do node é interessante utilizar o prefixo node: para 
 que as importações se diferencia de importações externas.    import http from 'node:http'
 
-# Criando servidor
+## Criando servidor
 - criando o servidor http, note que utilizamos uma função arow anonima , eu utilizo o 
 server.listen() passando a porta que eu quero rodar o servidor, com isso toda vez que eu 
 for acessar essa porta ele vai cair nessa  função que vai lidar com as chamadas http, 
@@ -51,3 +51,8 @@ o servidor o res é utilizado para devolver uma resposta para quem chama o servi
 ## executando o servidor nodejs
 - Para executar rodamos o comando node src/server.js
 - Para testar se o servidor está funcionando basta abrir o browser e acessar a porta que definimos.clea.
+
+# node --watch
+- O node não fica de forma nativa verificando todas as mudanças feitas no nosso arquivo 
+e estatando o servidor de forma automatizada, sempre será necessário rodar o servidor 
+novamente 
