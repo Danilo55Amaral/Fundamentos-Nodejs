@@ -52,7 +52,68 @@ o servidor o res é utilizado para devolver uma resposta para quem chama o servi
 - Para executar rodamos o comando node src/server.js
 - Para testar se o servidor está funcionando basta abrir o browser e acessar a porta que definimos.clea.
 
-# node --watch
+## node --watch
 - O node não fica de forma nativa verificando todas as mudanças feitas no nosso arquivo 
 e estatando o servidor de forma automatizada, sempre será necessário rodar o servidor 
-novamente 
+novamente.
+
+- Antes para poder fazer com que o servidor ficasse monitorando essas mudanças e rodando o servidor de forma automatica era necessário instalar libs externas porém com as novas versões 
+do node podemos fazer isso de forma nativa. rodando o comando    node --watch src/server.js
+
+## Rotas de criação e Listagem (Métodos HTTP)
+
+# Rotas
+- Aqui vemos um pouco de rotas http dentro do servidor node as rotas são caminhos 
+de entrada dentro da aplicação, quando a aplicação é desenvolvida e está pronta 
+ser consumida por um front end, uma api publica ou qualquer coisa do tipo, vamos 
+ter várias rotas dentro da nossa api, as rotas são meios de entrada ou formas 
+de quem está consumindo a api executar diferentes operações dentro do nosso back end.
+
+exemplos de rotas: Criar usuáeios, Listagem de usuários, Edição de usuario, Remoção de 
+usuários.
+
+# Requisição HTTP 
+- Uma requisição HTTP é composta de dois recursos príncipais o Método HTTP e URL quando o front end faz essa requisição obtemos essas duas informações através do req. 
+
+# Métodos HTTP
+- Dentro do modulo http temos varios métodos, vamos ver os principais, GET, POST, PUT, 
+PATCH, DELETE. esses são os metodos que comumente utilizamos em nas api. 
+GET => Buscar um recurso do back-end
+POST => Criar um recurso 
+PUT => Atualizar um recurso np back-end
+PATCH => Atualizar uma informação especifica de um recurso no back-end
+DELETE => Deletar um recurso do back-end
+
+PS- tem como ter duas rotas no back end ambas serem a mesma url porém com métodos 
+distintos um GET e um POST por ex.
+EX: 
+GET /users => Buscando usuários do back-end
+POST /users => Criar um usuario no back-end 
+
+- O Conjunto de método http mais o recurso ou url é o que da a rota e o resultado final
+que vai ser executado dentro do back end.
+
+- Eu posso fazer testes utilizando o method e url e fazer requisições.
+
+import http from 'node:http'
+
+const server = http.createServer((req, res) => {
+    const { method, url } = req 
+
+    if (method == 'GET' && url == '/users') {
+        return res.end('Listagem de usuários')
+    }
+
+    if (method == 'POST' && url == '/users') {
+        return res.end('Criação de usuário')
+    }
+    
+    return res.end('Hello')
+})
+
+server.listen(3333)
+
+
+
+
+
