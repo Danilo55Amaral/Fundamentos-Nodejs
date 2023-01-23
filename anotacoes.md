@@ -113,6 +113,62 @@ const server = http.createServer((req, res) => {
 
 server.listen(3333)
 
+## Salvando usuários em memória (Headers)
+
+- Aqui salvamos usuários dentro da memoria da aplicação.
+
+# Stateful
+
+- Até que o projeto seja parado utilizando um crtl + c por ex tudo que for declarado 
+de variavel dentro do projeto, vaificar salvo em memória, esse conceito é chamado de 
+Stateful, ela sempre vai ter um tipo de informação tendo guardada em memoria ou seja 
+a aplicação depende de informações que são salvas em memoria para que ela continue 
+funcionando, a partir do momento que a aplicação for derrubada e perder seus dados em 
+memoria ela pode funcionar de uma maneira diferente que antes.
+
+# Stateless 
+
+- Esse tipo não salva nada em memoria geralmente salva essas informações em dispositivos
+externos como banco de dados, arquivos de texto ou qualquer coisa do tipo
+indenpendente se aplicação for parada os dados, os arquivos vão se manter igual sem ter 
+qualquer tipo de problema. 
+
+- PS Quando criamos um servidor em node e devolve uma resposta, essa resposta que vai 
+para o front end não pode ser um array, ela precisa ter 3 formatos no máximo, ele pode 
+ser uma string, um buffer, ou um Uint8Array. 
+
+- No exemplo a gente precisou enviar um array por isso convertemos esse array para 
+string utilizando JSON. 
+
+# JSON (JavaScript Object Notation)
+
+É uma estrutura de dados bastante utilizada na transição de dados entre front end e 
+back end, também de back end para back end, essa estrutura de dados se assemelha muito 
+a como  as estruturas de dados são dentro do JavaScript.
+Com essa estrutura conseguimos transitar dados de todos os tipos dentro de uma string.
+
+- Utilizamod o JSON.stringify 
+
+- A aplicação Stateful é problemática caso coloque em produção por que sempre que o 
+servidor for restartado as informações se perdem. Por isso é necessário utilizar 
+banco de dados.
+
+# Cabeçalhos (Requisição/resposta)
+
+- São Metadados são quase que informações para que tanto o back como o front saibam 
+lidar com a requisição da melhor forma.
+- São informações adicionais que não tem haver com o dados retornado do back end
+para o front end mas como aquele dado pode ser interpretado pelo front end.
+
+- Por isso utilizamos o setHeader que significa que eu quero setar um cabeçalho 
+colocamos o nome do cabeçalho, se pesquisar no gogole headers mdn podemos ver varios 
+tipos que podemos utilizar, podemos também dá o nome que que quisermos, mas existem 
+alguns cabeçalhos que são padrões em api, utilizamos no nosso exemplo o Content-type
+como segundo parametro informamos qual que é o tipo de conteudo que está sendo 
+retornado, como estamos retornando um Json a gente coloca que retorna um application/json
+
+
+
 
 
 
