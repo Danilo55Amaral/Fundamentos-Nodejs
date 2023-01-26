@@ -167,6 +167,20 @@ alguns cabeçalhos que são padrões em api, utilizamos no nosso exemplo o Conte
 como segundo parametro informamos qual que é o tipo de conteudo que está sendo 
 retornado, como estamos retornando um Json a gente coloca que retorna um application/json
 
+## Conhecendo HTTP status code 
+
+- Quando devolvemos uma resposta para o front end ou seja após o front end executar 
+alguma rota da aplicação como uma listagem de usuarios, uma criação de usuario, uma 
+remoção de uauraio, existem vários tipos de códigos númericos que pode ser enviados 
+para o front end para informar não só pelo texto que enviamos mas para comunicar ao 
+front end se aquela requisiçao deu certo, se deu erro qual foi o tipo de erro.
+
+- O HTTP status code tem muita importancia semantica na comunicação back end e front
+end. Podemos pesquisar por    mdn http status code   e ver uma listagem desses códigos;
+
+- Como exemplo eu retornei uma resposta vazia informando o status code utilizando o 
+metodo writeHead passaando 201 esse status code simboliza umasresposta de sucesso 
+porém falando que conseguimos criar alguma coisa de forma bem sussedida.
 
 
 
