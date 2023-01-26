@@ -182,6 +182,43 @@ end. Podemos pesquisar por    mdn http status code   e ver uma listagem desses c
 metodo writeHead passaando 201 esse status code simboliza umasresposta de sucesso 
 porém falando que conseguimos criar alguma coisa de forma bem sussedida.
 
+## Entendendo Streams no Node 
+
+- Foi criada uma pasta só para exemplificar um dos conceitos que fez o node ser o 
+que ele é hoje.
+
+- As Streams foi a funcionalidade que fez o node ser quem é hoje, e fez com que o 
+node conseguisse resolver problemas que na época outras tecnologias ou não resolviam 
+ou resolviam de uma forma muito complexa, o node trouxe isso com muita simplicidade 
+e performance que hoje é utilizada em várias empresas para fazer esse tipo de 
+funcionalidade. 
+
+- Exemplo quando vamos ver um filme ou ouvir uma musica em um serviço de stream 
+conseguimos ver mesmo que não esteja totalmente carregado por completo e esse 
+é o conceito de stream é conseguir ler pequenas partes de alguma coisa e já 
+conseguir trabalhar com aqueles dados mesmo antes de ler o arquivo por completo. 
+
+- O node permite que isso seja feito de uma maneira simples, de uma maneira extremamente performatica
+
+- Para exemplificar imagine uma importação de clientes  via CSV (Excel) muito 
+utilizado em sistema ERP, CRM, sistema de gestão financeira, sistema de faturamento 
+em ecommerce.
+
+- O conceito de stream eu consigo ler os dados provindos da requisição HTTP aos poucos
+lendo esse arquivo e processando ele enquanto o arquivo ainda está sendo feito o upload
+ou seja enquando o arquivo está sendo enviado para o servidor eu já consigo processar 
+os dados as informações contidas dentro desse arquivo
+
+# Readable Streams / Writable Streams
+- Tesmos dois exemplos diferentes de streams Readable Streams (Streams de leitura)
+e Writable Streams (streams de escrita) nos exemplos da Netfliz e Spotify onde enviamos
+pro front end aos poucos uma informação do video e da musica isso se chama 
+Writable Streams significa que estamos enviando uma informação aos poucos, no exemplo 
+do  upload usuario envia um arquivo de 1Gb por exemplo e estamos lendo esse arquivo 
+aos poucos uma Readable Streams.
+
+
+
 
 
 
