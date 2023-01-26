@@ -217,6 +217,75 @@ Writable Streams significa que estamos enviando uma informação aos poucos, no 
 do  upload usuario envia um arquivo de 1Gb por exemplo e estamos lendo esse arquivo 
 aos poucos uma Readable Streams.
 
+## Criando Streams de leitura
+
+- No node toda porta de entrada e saída é uma stream e isso é um conceito muito 
+importante dentro do server que criamos por exemplo o req e o res são streams 
+ou seja quando se faz uma requisição HTTP para um servidor node da para manter essa
+requisição HTTP aberta e enviar dados para ela aos poucos assim como quando se devolve
+uma resposta do node para o front end do back end devolvendo uma resposta aos poucos 
+não necessáriamente se tem que devolver uma resposta de uma vez só.
+
+- Dentro do Node temos várias portas de entrada e saída uma bem comum é req e res 
+quando se trabalha com um servidor HTTP, Para exemplificar vamos ver outro modelo de 
+entradas e saídas no node que é o processo do node o stdin que nada mais é que tudo 
+que o usuario digita no terminal do node, isso é uma string readable, utilizamos 
+também o pipe() que é conhecido como encanamento , é muito comum se fazer com streams 
+dentro do node é conectar essas streams ins se podemos ler dados aos poucos também 
+podemos enviar esses poucos dados que temos para uma string que vai tratar esses dados
+da meneira que precisa ser tratado. Eu vou utilizar em seguida o process.stdout que é 
+o retorno a aplicação no terminal para mostrar como isso funciona.
+
+- Dentro do process.stdin tudo que estou recebendo como entrada eu estou encaminhando 
+através do pipe() para uma saída ==> process.stdout.
+
+- process.stdin -- Stream de leitura 
+- process.stdout -- stream de escrita
+
+# Construindo uma stream
+
+- Primeiro importamos de dentro de node:stream    import { Readable } from 'node:stream'
+
+- Em seguida eu crio uma classe que extende Readable de dentro do mode.
+- Toda stream Readable tem um método obrigatorio que é o _read esse metodo 
+retorna quais são os dados dessa stream.
+
+- PS- Uma stream de leitura tem como proposito enviar dados, fornecer informações.
+ - Dentro da minha classe eu criei uma variavel index que recebe 1 e dentro do 
+ _read eu criei uma variavel i que basicamente vai somando esse index mais 1 cada 
+ vez que o metodo for executado.
+
+ - Em seguida eu crio uma condição que se o meu i for maior  a 100  eu vou executar 
+ um push que é o metodo utilizado para uma Readable stream fornecer informações 
+ para quem estiver consumindo ela, quando eu envio null eu estou informando que 
+ não possuo mais informações para serem enviadas de dentro dessa string , se não 
+ ou seja se o i ainda não chegou a 100 eu quero enviar de dentro dessa string o i 
+
+ - Em seguida eu utilizo o new chamando minha classe que é a minha stream e utilizo um  pipe passando o process.stdout para enquanto ele ler a minha estream elejá 
+ vai escrevendo no terminal.
+
+# Buffer
+- Se eu executar essa stream dessa forma em que ela está o terminal do node irá
+retornar um erro por que dentro de stream não se pode trabalhar com dados primitivos 
+como strings ou number, é necessário trabalhar com outro formato especifico do node 
+que é o formato de buffer. 
+
+-Para resolver o problema no meu código eu criei uma variavel buf que recebe 
+Buffer.from() passando qual informação eu quero converter nesse formato. Em 
+seguida eu envio meu buf no push.
+
+- Node que ainda vai dar um erro por que o Buffer é uma string e estamos enviando um 
+number por isso é necessário converter também para string.
+
+    const buf = Buffer.from(String(i)) 
+
+- Eu posso melhorar inda mais o exemplo utilizando a função setTimeout() e passando um
+um intervalo de tempo para executar o código, note que a stream diferente de um modelo
+de dados tradicional da para aos poucos a cada um segundo como definimos trabalhar com 
+os dados retornados de dentro de uma stream, eu já consigo mostrar esses dados no
+stdout dados de dentro da stream mesmo antes da stream está completada ou seja eu já 
+consigo trabalhar com esses dados mesmo antes de chegar no final que é o 100 que 
+foi definido na condição.
 
 
 
