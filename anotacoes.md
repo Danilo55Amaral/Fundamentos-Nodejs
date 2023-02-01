@@ -287,6 +287,58 @@ stdout dados de dentro da stream mesmo antes da stream está completada ou seja 
 consigo trabalhar com esses dados mesmo antes de chegar no final que é o 100 que 
 foi definido na condição.
 
+## Stream de escrita e transformação
+
+- A stream de escrita diferente da de leitura ela recebe dados da stream de leitura 
+e vai fazer algo com esses dados. 
+
+- Para trabalhar com essa stream importamos o Writable de dentro de node:stream 
+e em seguida criamos a nossa stream de escrita na qual chamo de MultiplyByTenStream 
+o objetivo dela é pegar um número de uma stream de leitura e vai multiplicar por 10 
+nesse tipo de Stream utilizamod o método _write e esse método recebe 3 paramtros 
+chunk, encoding e callback. 
+
+- O chunk é o pedaço da strem de leitura que foi lido, é tudo que foi passado em 
+this.push() na outra stream de leitura, O encoding é como essa informação está codificada,
+callback é uma função que a stream de escrita precisa chamar quando ela terminar de fazer o 
+que precisa fazer com a informação. 
+
+- Dentro da Stream de escrita não retornamos nada por que ela processa dados ela nunca vai 
+transformar um dado em alguma outra coisa.
+
+- O chunk é um buffer e precisamos converter ele para string e por isso utilzamos o metodo 
+toString(), como no exemplo eu quiz trabalhar com um number eu também elém de converter para string utilizei o Number() para converter para número.
+
+- Em seguida eu estou lendo os dados de uma stream utilizando o  new OneToHoundreStream() 
+que me retorna numeros de 1 a 100 e em seguida eu estou escrevendo esses dados dentro de 
+uma stream de escrita nesse trecho   .pipe(new MultiplyByTenStream())
+
+- REcapitulando estamos lendo dados que está retornando de segundo em segundo na nossa 
+primeira stream e em seguida eu já estou trabalhando com esses dados na outra stream de 
+forma gradativa ou seja enquanto o arquivo ainda está sendo lido eu já estou trabalhando 
+com ele.
+
+# Streams de Transformação 
+
+- Essas streams transformam dados para exemplificar eu escrevi uma stream que vai pegar 
+todos os numeros e vai converte-los para negativos, vou chamar essa stream de 
+InverseNumberStream.
+
+- Eu devo também fazer a importação do Transform de dentro de node:stream, nessa stream 
+é utilizado o método _transform e os parametros são também o chunk, encoding, callback 
+na função callback eu devo enviar como primeiro parametro null, o primeiro parametro de 
+um callback é o erro por isso eu envio esse primeiro parametro como nulo caso não 
+tenha dado erro nenhum, caso tenha dado algum erro dentro da minha stream, o segundo 
+parametro do callback é a conversão ou seja o valor transformado por isso eu envio 
+o dado transformado, lembrando que esse dado tem que ser enviado como Buffer.from().
+e também como String.
+
+- Em seguida eu crio mais um pipe passando minha straam. 
+
+- O Buffer é um meio de transitar dados entre Streams é um modelo utilizado pelo node
+para transicionar informações entre streams.
+
+
 
 
 
