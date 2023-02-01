@@ -338,6 +338,45 @@ e também como String.
 - O Buffer é um meio de transitar dados entre Streams é um modelo utilizado pelo node
 para transicionar informações entre streams.
 
+## Aplicando Streams no módulo HTTP 
+
+- Aqui criamos um servidor HTTP a parte para ver como o conceito de Stream se conecta 
+com o mundo real. 
+
+- Para esse exemplo eu criei um novo arquivo chamado stream-http-server.js e dentro desse 
+arquivo foi criado um servidor.
+
+- Também foi criado um outro arquivo chamado fake-upload-to-http-stream.js nesse arquivo 
+é criado um upload ficticio como se fosse o front end chamando o servidor http enviando 
+alguma informação pesada que precisa ser enviada aos poucos e enquanto isso o back end 
+já vai conseguir processar essas informações aos poucos de forma gradativa e transformando 
+essas informações.
+
+- Eu utilizei o metodo fetch passando o endereço do meu back end e dentro eu envio 
+através do metodo POST , no body da minha requisição http que é o conteúdo da minha 
+requisição eu passei a minha stream no exemplo foi enviada a new OneToHoundreStream()
+
+- Dentro do meu servidor http eu posso utilizar a minha stream InverseNumberStream 
+
+# Impostante Streams no servidor Node.js
+
+- PS - É importante lembrar e entender que tudo no node são streams todas as portas 
+de entrada e saída no node são streams, o meu req e res são streams. 
+
+- O req é uma ReadableStream eu consigo ler dados da minha requisição 
+- O res é uma WritableStream eu consigo escrever dados na minha resposta
+
+- Quando eu executo o meu servidor e quando eu executo o meu fake-upload-to-http-stream
+ele consegue dentro do servidor http da um log aos poucos conforme a informação está 
+sendo enviada do front end , o meu arquivo fake abriu uma conexão com o back end e ele
+não fechou essa conexão, ele abriu essa conexão e está enviando dados aos poucos para
+o servidor http.
+
+- Isso é a base de tudo que o node é capaz , é a base da arquitetura do node, da para
+abrir um canal de inpu de dados ou seja de envio de dados para dentro do servidor http
+e não fechar esse canal.
+
+
 
 
 
