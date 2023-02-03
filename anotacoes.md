@@ -422,7 +422,33 @@ servidor.
             console.log(data)
         })
 
+## Corpo da requisição em JSON (Stream & Buffers)
 
+- Aqui eu utilizei o mesmo trecho de código do exemplo passado no meu arquivo server
+e utilizei o Insommia para simular uma requisiçõo real vinda de um front end. 
+- Eu subistituir o nome da minha const por body pois é o corpo da minha requisição.
+
+- Também foi necessário converter esses dados vindos da requisição em Json e para 
+isso eu utilizei o JSON.parse() ou seja eu transformei um json já criado em uma 
+estrutura JavaScript um objeto, um array, algm tipo primitivo do JavaScript.
+
+- Com isso eu consigo utilizar esse dados do body fazendo uma desestruturação e 
+utilzar no meu push.
+
+            if (method == 'POST' && url == '/users') {
+                const { name, email } = body
+
+                users.push({
+                    id: 1,
+                    name,
+                    email,
+                })
+
+- quando não se tem o corpo da requisição elel irá retornar um erro no terminal 
+isso por que esse código ele tenta executar até mesmo quando o corpo da requisição 
+está vazio, uma das técnias que podemos utilizar é colocar o nosso body em um bloco 
+try para ele tentar executar o código se der erro eu vou utilizar o catch ele vai 
+retornar null mas para isso é necessário utilizar o req no body.
 
 
 
