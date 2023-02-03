@@ -376,6 +376,52 @@ o servidor http.
 abrir um canal de inpu de dados ou seja de envio de dados para dentro do servidor http
 e não fechar esse canal.
 
+## Consumindo uma stream completa 
+
+- Em alguns casos queremos ler todas os dados da stream antes de processar esses dados
+existe uma sintaxe para se trabalhar com isso no node que é criar um array de buffers 
+em seguida percorre a stream populando esses buffers e depois trabalha com o array de 
+forma completa. 
+
+- No node existe uma sintaxe que é utilizar o await para se trabalhar com streams 
+o await dentro de uma stream aguarda cada pedaço da stream ser retornado, veja o exemplo
+
+const buffers = []  
+
+for await (const chunk of req) {
+        buffers.push(chunk)
+    }
+
+- Essa sintaxe permite percorrer cada pedaço da stream e adicionar esse pedaço dentro 
+do array de buffers que foi criado. 
+
+- Essa sintaxe de for await permite percorrer toda a stream e enquanto ela não for 
+percorrida por completa nada abaixo dessa linha de código será executado.
+
+- Depois para ver o conteúdo completo eu crio uma const fullStreamContent e utilizo 
+o Buffer utilizando concat que é para juntar todos os pedaços em um só, passando o
+array de buffers convertendo para string. 
+
+- Também devo retornar o res.end enviando minha variavel fullStreamContent
+
+    const fullStreamContent = Buffer.concat(buffers).toString()
+
+    console.log(fullStreamContent)
+
+    return res.end(fullStreamContent)
+
+- Eu volto ao meu arquivo de fake upload e pego esse retorno que estou devolvendo do
+servidor.
+
+        fetch('http://localhost:3334', {
+            method: 'POST',
+            body: new OneToHoundreStream(),
+        }).then(response => {
+            return response.text()
+        }).then(data => {
+            console.log(data)
+        })
+
 
 
 
