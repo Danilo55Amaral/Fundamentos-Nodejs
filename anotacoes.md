@@ -450,7 +450,23 @@ está vazio, uma das técnias que podemos utilizar é colocar o nosso body em um
 try para ele tentar executar o código se der erro eu vou utilizar o catch ele vai 
 retornar null mas para isso é necessário utilizar o req no body.
 
+## Entendendo Buffers no Node 
 
+- O Buffer é uma representação no espaço da memoria do computador, utilizado para 
+transitar dados de uma maneira muito rápida, os dados armazenados no buffer são 
+armazenados para logo serem tratados ou seja enviados para outro lugar, e em seguida
+serem removidos, é uma maneira de salvar e ler na memória de uma maneira muito 
+performática.
+
+- O node ler essa informação de forma binária e isso deixa muito mais performatico 
+e o buffer guarda na memoria os dados de forma binária. 
+
+- O Buffer foi uma api criada no node especificamente pela incapacidade do JavaScript 
+de trabalhar com dados binários de maneira eficiênte.
+
+- Para exemplificar eu criei um arquivo chamado buffer.js no qual eu criei um buffer 
+e utilizei o Buffer.from passando uma string, note que após dá um console ele irá 
+retornar essa string convertida em hexadecimal que é um tipo de arquivo binário.
 
 
 
