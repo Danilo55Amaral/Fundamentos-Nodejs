@@ -505,8 +505,94 @@ quando for importar.
 a requisição, são fáceis de se reconhecer por que sempre recebem como parametros o 
 req e o res 
 
+# Criando banco de dados JSON
 
+- Como aqui na aplicação ainda não integramos a algum banco de dados como sql ou outro
+estamos trabalhando com os dados da aplicação em memoria, foi criado um array de
+usuários. Mas dessa forma toda vez que aplicação for reiniciada os dados serão perdidos.
 
+- Aqui vamos criar um banco de dados baseados em arquivos físicos assim os dados não 
+são perdidos. 
+
+- Para fazer isso eu criei um arquivo chamado database.js, dentro desse arquivo eu criei
+uma classe chamada Database, eu criei um objeto chamado database e isso faz com que eu 
+consiga salvar nessa base de dados mais de um tipo de informações. 
+
+- Eu criei um  método chamado insert que recebe como argumento a tabela e os dados que 
+se quer fazer a inserção, eu também criei um metodo chamado select que vai retornar a 
+tabela com todos os dados inseridos dentro dela.
+
+- O select ele procura se existe uma chave dentro do meu objeto database chamada table 
+se não existir ele irá retornar um array vazio, no final ele retorna data. 
+
+- O insert vai verificar se existe algum registro inserido na table, se sim ele adiciona
+se não ele cria um array, foi criado um if que se já existe um array inserido nessa 
+tabela ele irá pegar essa tabela e fazer um push adicionando data que é o novo item
+se não (else) ele vai criar um novo array com o item dentro o data. Eu retorno o item 
+que foi inserido o data.
+
+export class Database {
+    database = {} 
+
+    select(table) {
+        const data = this.database[table] ?? []
+
+        return data
+    }
+
+    insert(table, data) {
+        if (Array.isArray(this.database[table])) {
+            this.database[table].push(data)
+        } else {
+            this.database[table] = [data]
+        }
+
+        return data;
+    }
+}
+
+- Aplicando o banco de dados dentro do nosso server.js para isso eu crio uma const 
+database que recebe new Database e eu devo importar meu Database, ao invés de fazer 
+um users.push  eu transformo isso em uma constante chamada user, abaixo eu executo 
+database.insert passando como argumento o nomde da tabela e a informação que quero 
+inserir que é meu user, na listagem eu eu busco meus users de database.select 
+passando users que é o nome da tabela.
+
+const database = new Database
+
+const server = http.createServer(async (req, res) => {
+    const { method, url } = req 
+
+    await json(req, res)
+
+    if (method == 'GET' && url == '/users') {
+        const users = database.select('users')
+
+        return res     
+            .end(JSON.stringify(users))
+    }
+
+    if (method == 'POST' && url == '/users') {
+        const { name, email } = req.body
+
+        const user = {
+            id: 1,
+            name,
+            email,
+        }
+
+        database.insert('users', user) 
+
+        return res.writeHead(201).end()
+    }
+    
+    return res.writeHead(404).end()
+})
+
+server.listen(3333)
+
+# #database
+- Eu posso tornar meu database uma propriedade privada adicionando o # 
 
 
 
