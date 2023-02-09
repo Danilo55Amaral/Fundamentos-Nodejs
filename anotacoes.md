@@ -20,13 +20,13 @@ vamos criar aplicações rest , api.
 - O node vem automaticamente com modulos internos para facilitar o trabalho com coisas que 
 que são muito comuns em aplicações back end, uma delas é o modulo de http.
 
-## Modulo de http 
+# Modulo de http 
 - Para importar esse modulo de http utilizamos      const http = require('http')
 
 - Esse modulo de http possue varias funcionalidades para construir aplicações HTTP 
 que são as api que serão construidas.
 
-## CommonJs / ESModules
+# CommonJs / ESModules
 - Para fazer essa importação utilizamos um padrão chamado CommonJS esse padrão de 
 importação utiliza o require porém hoje em dia utiliza-se muito um outro padrão que 
 são os ESModules que as importações e exportações utilizam o padrão import/export 
@@ -38,7 +38,7 @@ do http para     import http from 'http'
 - Para importação dos modulos internos do node é interessante utilizar o prefixo node: para 
 que as importações se diferencia de importações externas.    import http from 'node:http'
 
-## Criando servidor
+# Criando servidor
 - criando o servidor http, note que utilizamos uma função arow anonima , eu utilizo o 
 server.listen() passando a porta que eu quero rodar o servidor, com isso toda vez que eu 
 for acessar essa porta ele vai cair nessa  função que vai lidar com as chamadas http, 
@@ -48,11 +48,11 @@ uma rota para criar um usuario que é necessário enviar uma informação para o
 email,senha ou seja através do req é possivel obter todas as informações de quem está chamando 
 o servidor o res é utilizado para devolver uma resposta para quem chama o servidor. 
 
-## executando o servidor nodejs
+# executando o servidor nodejs
 - Para executar rodamos o comando node src/server.js
 - Para testar se o servidor está funcionando basta abrir o browser e acessar a porta que definimos.clea.
 
-## node --watch
+# node --watch
 - O node não fica de forma nativa verificando todas as mudanças feitas no nosso arquivo 
 e estatando o servidor de forma automatizada, sempre será necessário rodar o servidor 
 novamente.
@@ -60,9 +60,9 @@ novamente.
 - Antes para poder fazer com que o servidor ficasse monitorando essas mudanças e rodando o servidor de forma automatica era necessário instalar libs externas porém com as novas versões 
 do node podemos fazer isso de forma nativa. rodando o comando    node --watch src/server.js
 
-## Rotas de criação e Listagem (Métodos HTTP)
+# Rotas de criação e Listagem (Métodos HTTP)
 
-# Rotas
+## Rotas
 - Aqui vemos um pouco de rotas http dentro do servidor node as rotas são caminhos 
 de entrada dentro da aplicação, quando a aplicação é desenvolvida e está pronta 
 ser consumida por um front end, uma api publica ou qualquer coisa do tipo, vamos 
@@ -72,10 +72,10 @@ de quem está consumindo a api executar diferentes operações dentro do nosso b
 exemplos de rotas: Criar usuáeios, Listagem de usuários, Edição de usuario, Remoção de 
 usuários.
 
-# Requisição HTTP 
+## Requisição HTTP 
 - Uma requisição HTTP é composta de dois recursos príncipais o Método HTTP e URL quando o front end faz essa requisição obtemos essas duas informações através do req. 
 
-# Métodos HTTP
+## Métodos HTTP
 - Dentro do modulo http temos varios métodos, vamos ver os principais, GET, POST, PUT, 
 PATCH, DELETE. esses são os metodos que comumente utilizamos em nas api. 
 GET => Buscar um recurso do back-end
@@ -113,11 +113,11 @@ const server = http.createServer((req, res) => {
 
 server.listen(3333)
 
-## Salvando usuários em memória (Headers)
+# Salvando usuários em memória (Headers)
 
 - Aqui salvamos usuários dentro da memoria da aplicação.
 
-# Stateful
+## Stateful
 
 - Até que o projeto seja parado utilizando um crtl + c por ex tudo que for declarado 
 de variavel dentro do projeto, vaificar salvo em memória, esse conceito é chamado de 
@@ -126,7 +126,7 @@ a aplicação depende de informações que são salvas em memoria para que ela c
 funcionando, a partir do momento que a aplicação for derrubada e perder seus dados em 
 memoria ela pode funcionar de uma maneira diferente que antes.
 
-# Stateless 
+## Stateless 
 
 - Esse tipo não salva nada em memoria geralmente salva essas informações em dispositivos
 externos como banco de dados, arquivos de texto ou qualquer coisa do tipo
@@ -140,7 +140,7 @@ ser uma string, um buffer, ou um Uint8Array.
 - No exemplo a gente precisou enviar um array por isso convertemos esse array para 
 string utilizando JSON. 
 
-# JSON (JavaScript Object Notation)
+## JSON (JavaScript Object Notation)
 
 É uma estrutura de dados bastante utilizada na transição de dados entre front end e 
 back end, também de back end para back end, essa estrutura de dados se assemelha muito 
@@ -153,7 +153,7 @@ Com essa estrutura conseguimos transitar dados de todos os tipos dentro de uma s
 servidor for restartado as informações se perdem. Por isso é necessário utilizar 
 banco de dados.
 
-# Cabeçalhos (Requisição/resposta)
+## Cabeçalhos (Requisição/resposta)
 
 - São Metadados são quase que informações para que tanto o back como o front saibam 
 lidar com a requisição da melhor forma.
@@ -167,7 +167,7 @@ alguns cabeçalhos que são padrões em api, utilizamos no nosso exemplo o Conte
 como segundo parametro informamos qual que é o tipo de conteudo que está sendo 
 retornado, como estamos retornando um Json a gente coloca que retorna um application/json
 
-## Conhecendo HTTP status code 
+# Conhecendo HTTP status code 
 
 - Quando devolvemos uma resposta para o front end ou seja após o front end executar 
 alguma rota da aplicação como uma listagem de usuarios, uma criação de usuario, uma 
@@ -182,7 +182,7 @@ end. Podemos pesquisar por    mdn http status code   e ver uma listagem desses c
 metodo writeHead passaando 201 esse status code simboliza umasresposta de sucesso 
 porém falando que conseguimos criar alguma coisa de forma bem sussedida.
 
-## Entendendo Streams no Node 
+# Entendendo Streams no Node 
 
 - Foi criada uma pasta só para exemplificar um dos conceitos que fez o node ser o 
 que ele é hoje.
@@ -209,7 +209,7 @@ lendo esse arquivo e processando ele enquanto o arquivo ainda está sendo feito 
 ou seja enquando o arquivo está sendo enviado para o servidor eu já consigo processar 
 os dados as informações contidas dentro desse arquivo
 
-# Readable Streams / Writable Streams
+## Readable Streams / Writable Streams
 - Tesmos dois exemplos diferentes de streams Readable Streams (Streams de leitura)
 e Writable Streams (streams de escrita) nos exemplos da Netfliz e Spotify onde enviamos
 pro front end aos poucos uma informação do video e da musica isso se chama 
@@ -217,7 +217,7 @@ Writable Streams significa que estamos enviando uma informação aos poucos, no 
 do  upload usuario envia um arquivo de 1Gb por exemplo e estamos lendo esse arquivo 
 aos poucos uma Readable Streams.
 
-## Criando Streams de leitura
+# Criando Streams de leitura
 
 - No node toda porta de entrada e saída é uma stream e isso é um conceito muito 
 importante dentro do server que criamos por exemplo o req e o res são streams 
@@ -242,7 +242,7 @@ através do pipe() para uma saída ==> process.stdout.
 - process.stdin -- Stream de leitura 
 - process.stdout -- stream de escrita
 
-# Construindo uma stream
+## Construindo uma stream
 
 - Primeiro importamos de dentro de node:stream    import { Readable } from 'node:stream'
 
@@ -264,7 +264,7 @@ retorna quais são os dados dessa stream.
  - Em seguida eu utilizo o new chamando minha classe que é a minha stream e utilizo um  pipe passando o process.stdout para enquanto ele ler a minha estream elejá 
  vai escrevendo no terminal.
 
-# Buffer
+## Buffer
 - Se eu executar essa stream dessa forma em que ela está o terminal do node irá
 retornar um erro por que dentro de stream não se pode trabalhar com dados primitivos 
 como strings ou number, é necessário trabalhar com outro formato especifico do node 
@@ -287,7 +287,7 @@ stdout dados de dentro da stream mesmo antes da stream está completada ou seja 
 consigo trabalhar com esses dados mesmo antes de chegar no final que é o 100 que 
 foi definido na condição.
 
-## Stream de escrita e transformação
+# Stream de escrita e transformação
 
 - A stream de escrita diferente da de leitura ela recebe dados da stream de leitura 
 e vai fazer algo com esses dados. 
@@ -318,7 +318,7 @@ primeira stream e em seguida eu já estou trabalhando com esses dados na outra s
 forma gradativa ou seja enquanto o arquivo ainda está sendo lido eu já estou trabalhando 
 com ele.
 
-# Streams de Transformação 
+## Streams de Transformação 
 
 - Essas streams transformam dados para exemplificar eu escrevi uma stream que vai pegar 
 todos os numeros e vai converte-los para negativos, vou chamar essa stream de 
@@ -338,7 +338,7 @@ e também como String.
 - O Buffer é um meio de transitar dados entre Streams é um modelo utilizado pelo node
 para transicionar informações entre streams.
 
-## Aplicando Streams no módulo HTTP 
+# Aplicando Streams no módulo HTTP 
 
 - Aqui criamos um servidor HTTP a parte para ver como o conceito de Stream se conecta 
 com o mundo real. 
@@ -358,7 +358,7 @@ requisição eu passei a minha stream no exemplo foi enviada a new OneToHoundreS
 
 - Dentro do meu servidor http eu posso utilizar a minha stream InverseNumberStream 
 
-# Impostante Streams no servidor Node.js
+## Impostante Streams no servidor Node.js
 
 - PS - É importante lembrar e entender que tudo no node são streams todas as portas 
 de entrada e saída no node são streams, o meu req e res são streams. 
@@ -376,7 +376,7 @@ o servidor http.
 abrir um canal de inpu de dados ou seja de envio de dados para dentro do servidor http
 e não fechar esse canal.
 
-## Consumindo uma stream completa 
+# Consumindo uma stream completa 
 
 - Em alguns casos queremos ler todas os dados da stream antes de processar esses dados
 existe uma sintaxe para se trabalhar com isso no node que é criar um array de buffers 
@@ -422,7 +422,7 @@ servidor.
             console.log(data)
         })
 
-## Corpo da requisição em JSON (Stream & Buffers)
+# Corpo da requisição em JSON (Stream & Buffers)
 
 - Aqui eu utilizei o mesmo trecho de código do exemplo passado no meu arquivo server
 e utilizei o Insommia para simular uma requisiçõo real vinda de um front end. 
@@ -450,7 +450,7 @@ está vazio, uma das técnias que podemos utilizar é colocar o nosso body em um
 try para ele tentar executar o código se der erro eu vou utilizar o catch ele vai 
 retornar null mas para isso é necessário utilizar o req no body.
 
-## Entendendo Buffers no Node 
+# Entendendo Buffers no Node 
 
 - O Buffer é uma representação no espaço da memoria do computador, utilizado para 
 transitar dados de uma maneira muito rápida, os dados armazenados no buffer são 
@@ -467,6 +467,44 @@ de trabalhar com dados binários de maneira eficiênte.
 - Para exemplificar eu criei um arquivo chamado buffer.js no qual eu criei um buffer 
 e utilizei o Buffer.from passando uma string, note que após dá um console ele irá 
 retornar essa string convertida em hexadecimal que é um tipo de arquivo binário.
+
+# Criando middleware de JSON 
+
+- Toda a parte que consome o corpo da requisição e que transforma o corpo da requisição 
+em um JSON salvando dentro do req.body isso pode ficar em outro arquivo que chamei de
+json.js e coloquei em uma pasta que criei e chamei de middlewares.
+
+- Dentro desse arquivo json eu exporto uma função assincrona chamada json essa função 
+recebe req e res do servidor e basicamente executa o código que copiei do server.js.
+
+export async function json(req, res) {
+    const buffers = [] 
+
+    for await (const chunk of req) {
+        buffers.push(chunk)
+    }
+
+    try {
+        req.body = JSON.parse(Buffer.concat(buffers).toString())
+    } catch {
+        req.body = null
+    }
+}
+
+- Dentro do meu server.js eu posso chamar meu json devo fazer a importação, eu 
+passo req e res como parametro, como estou trabalhando com uma função assincrona eu 
+devo chamar minha função json com um await. 
+
+- Como estou utilizando o modules é importante colocar a extensão dos arquivos 
+quando for importar. 
+    import { json } from './middlewares/json.js'
+
+# Middlewares
+
+- É um interceptador que dentro do node nada mais é que uma função que vai interceptar 
+a requisição, são fáceis de se reconhecer por que sempre recebem como parametros o 
+req e o res 
+
 
 
 
