@@ -594,5 +594,103 @@ server.listen(3333)
 # #database
 - Eu posso tornar meu database uma propriedade privada adicionando o # 
 
+# Persistindo banco de dados 
 
+- Aqui salvamos os dados para que quando parar e rodar a aplicação novamente 
+os dados persistirem armazenados. 
+
+- Para trabalhar com arquivos físicos dentro do node é necessário trabalhar com o
+modulo interno do node de file sistem exixtem dois o node:fs e o node:fs/promises 
+que esse permite trabalhar com o novo formato de asincronismo do JavaScript que 
+são as promises. 
+
+    import fs from 'node:fs/promises'; 
+
+- Eu criei um médoto dentro da minha classe chamado #perist que será responsável em 
+escrever o banco de dados em um arquivo físico. Eu devo chamar esse método toda vez 
+que uma nova informação for inserida no banco de dados por isso devo chamar esse método 
+no meu insert.
+
+- Dentro do meu metodo eu utilizo o fs.writeFile passando um nome do arquivo, como vou 
+salvar um objeto eu salvo como arquivo .json , em seguida eu utilizo o JSON.stringifi 
+para converter esses dados de #database em uma estrutura json, isso por que o writeFile
+só aceita dados como string.
+
+- Reiniciando o projeto note que quando uma nova inserção for feita ele vai criar o 
+arquivo db.json e vai armazenar os dados inseridos lá nesse arquivo. 
+
+import fs from 'node:fs/promises'; 
+
+export class Database {
+    #database = {} 
+
+    #persist() {
+        fs.writeFile('db.json', JSON.stringify(this.#database))
+    }
+
+    select(table) {
+        const data = this.#database[table] ?? []
+
+        return data
+    }
+
+    insert(table, data) {
+        if (Array.isArray(this.#database[table])) {
+            this.#database[table].push(data)
+        } else {
+            this.#database[table] = [data]
+        }
+
+        this.#persist();
+
+        return data;
+    }
+}
+
+
+- Note que o node criou esse arquivo na raiz do projeo por que o node leva em 
+consideração o local em que o projeto é executado, podemos modificar o local 
+de criação desse arquivo. 
+
+- A maneira mais atual de se trabalhar com caminhos no node, podemos utilizar uma 
+classe interna do node chamada URL que posso enviar dois paramtros, primeiro o 
+nome do arquivo que eu quero, e em seguida o caminho relativo onde quero criar 
+esse arquivo. 
+
+const databasePath = new URL('db.json', import.meta.url)
+
+- Em seguida eu coloco meu databasePath como primeiro parametro do meu writeFile
+
+fs.writeFile(databasePath, JSON.stringify(this.#database))
+
+- Com isso a localização do arquivo do banco de dados está relativa ao arquivo 
+database.js.
+
+- Agora é necessário recuperar esses dados quando a aplicação inicializa eu crio 
+um  constructor que será executado quando o banco de dados for instanciado, dentro 
+do constructor eu utilizo o readFile passando databasePath para ele ler esse arquivo
+como segundo paramtro eu passo qual encoding estou utilizando como utf-8 que é o padrão
+em seguida eu utilizo o .then pegando os dados desse arquivo e salvando dentro do 
+banco de dados this.#database = JSON.paeser(data). 
+
+ constructor() {
+        fs.readFile(databasePath, 'utf-8').then(data => {
+            this.#database = JSON.parse(data)
+        })
+    }
+
+Caso meu arquivo não exista eu posso utilizar um catch escrevendo para ele persistir 
+mesmo que vazio.
+
+ constructor() {
+        fs.readFile(databasePath, 'utf-8')
+            .then(data => {
+                this.#database = JSON.parse(data)
+            })
+            .catch(() => {
+                this.#persist()
+            })
+    }
+
+    
 
