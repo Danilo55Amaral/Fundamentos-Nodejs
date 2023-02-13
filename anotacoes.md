@@ -692,5 +692,22 @@ mesmo que vazio.
             })
     }
 
-    
+# Criando ID único e universal (UUID)
+
+- Note que toda vez que fazemos uma nova inserção ele sempre está gerando com id: 1 
+existem várias formas de resolver isso, no caso aqui ao invés de criar com id: 1 
+podemos criar sempre com id aleatório e único. 
+
+- Dentro do node:crypto conseguimos importar uma função chamada randomUUID, essa função
+sempre vai retornar um id único toda vez que uma inserção for feita, vou  utilizar essa
+função dentro de user, subistituindo o valor 1 que estava no id.
+
+- Quando queremos dentro do node criar uma informação única é muito comum se utilizar o 
+Math.random do JavaScrit porém não é interessante, é melhor utilizar o randomUUID().
+
+const user = {
+    id: randomUUID(),
+    name,
+    email,
+}
 
