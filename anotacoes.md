@@ -711,3 +711,63 @@ const user = {
     email,
 }
 
+# Separando rotas da aplicação 
+
+- Criamos mais Rotas para a aplicação, para isso foi criado um arquivo chamado routes.js 
+dentro desse arquivo foi criado um array de rotas que irá conter todas as rotas da 
+aplicação, cada rota na aplicação será um objeto, esse método é composto pelo metodo que 
+vai chamar aquela rota, o caminho para chamar a rota, e o que que vai acontecer quando a 
+rota for chamada.
+
+O meu banco de dados também vem para esse arquivos de rotas.Também importei o randomm. 
+
+const database = new Database
+
+export const routes = [
+    {
+        method: 'GET',
+        path: '/users',
+        handler: (req, res) => {
+            const users = database.select('users')
+
+            return res.end(JSON.stringify(users))
+        }
+    },
+    {
+        method: 'POST',
+        path: '/users',
+        handler: (req, res) => {
+            const { name, email } = req.body
+
+            const user = {
+                id: randomUUID(),
+                name,
+                email,
+            }
+
+            database.insert('users', user)
+
+            return res.writeHead(201).end()
+        }
+    }
+]
+
+- Agora dentro do server.js é necessário verificar se dentro do array de rotas existe 
+alguma entrada que bate com a operação que se quer fazer , para fazer isso eu crio 
+uma const chamada route que recebe routes e ele vai importar, vou utilizar o find() para
+encontrar uma rota que retorne o método que seja igual ao metodo que está sendo requisitado
+e também o caminho seja igual a url que está sendo requisitada. 
+
+ const route = routes.find(route => {
+        return route.method == method && route.path == url
+    })
+
+Em seguida eu crio um if caso tenha encontrado alguma rota ele retorna route.handler que 
+é a função handle que existe na rota passando o req e o res.
+
+ if (route) {
+        return route.handler(req, res) 
+    }
+
+- Feito essa validação, quando for necessário ter mais rotas basta apenas criar la dentro do
+objeto em routes.js
