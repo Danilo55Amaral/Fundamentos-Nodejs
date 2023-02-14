@@ -828,4 +828,60 @@ um recurso através da rota.
     },
 }
 
+# Criando regex dos parâmetros 
 
+- Aqui construimos praticamente um gerador dinamico de caminhos das rotas para  conseguir 
+interpretar is id que podem vim, normalmente esses parametros são identificados na rota 
+com o sinal de : isso significa que será recebido um paramtro dinamico, uma informação 
+dinamica que pode ser qualquer valor, em seguida dou o nome para ela por exemplo :id que 
+vai simbolizar que é o id do usuário. 
+
+## importante
+
+- Tudo isso que foi feito é por que estamos criando um servidor node.js na mão sem 
+nehuma lib. 
+
+## Regex
+
+- Aqui vamos utilizar uma regex que é uma funcionalidade muito interessante, para isso 
+eu criei uma pasta chamada utils, e dentro eu criei um arquivo chamado build-route-path.js
+dentro desse arquivo eu escrevo uma função chamada buildRoutePatth que recebe o caminho da 
+rota, dentro dessa função eu escrevi uma Regex para indentificar cada um desses routes 
+paramters,  uma Regex é uma expressão regular é uma forma de encontrar textos que seguem 
+um formato especifico dentro de um texto muito maior, para escrever uma regex eu utiizo // 
+na expresão regular que eu escrevi eu digo que quero encontar em /users/:id tudo que comeca 
+com dois pontos e depois dos dois pontos tem letras de a-z ou letras de A-Z que podem ser 
+maiúsculas, tem que está sobre colchetes e essas letras podem repetir uma ou mais vezes e 
+por isso utilizo o sinal de +  -----> /:([a-zA-Z]+)/  
+
+// /users/:id 
+export function buildRoutePath(path) {
+    const routeParametersRegex = /:([a-zA-A]+)/
+}
+
+Essa Regex não é global e ela vai parar na primeira vez que ela encontar alguma coisa 
+que bata com o que se procura na regex, adicionando um g no final essa Regex passa a ser 
+global  e não vai parar até encontrar em todos os locais. 
+
+// /users/:id 
+export function buildRoutePath(path) {
+    const routeParametersRegex = /:([a-zA-A]+)/g
+}
+
+- A extensão Regex Previewer permite testar a regex ela cria um arquivo de teste que podemos
+clicar nele e verificar por exemplo na nossa rota /users/:id se a Regez vai encontrar o que 
+procuramos. 
+
+- Eu posso fazer um teste dando um console e pegando o path que é o que estamos usando 
+como parametro, existe um metodo chamado matchAll() de toda string no JavaScript que 
+dá para passar uma Reagex e ele retorna quais buscas a Reagex fez que foram bem sucedidas
+e passo a Regex como parametro desse método. Eu preciso usar também o método Array.from
+por volta.
+
+console.log(Array.from(path.matchAll(routeParametersRegex)))
+
+- Dentro das Rotas  eu vou colocar a função buildRoutePat em volta de todas as patch das 
+rotas da aplicação.
+
+- Quando eu rodar o projeto no meu console vai ser retornada informações das rotas e as 
+que for encontrados com o Regex retornará as informações dentro de um array. 
