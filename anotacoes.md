@@ -771,3 +771,61 @@ Em seguida eu crio um if caso tenha encontrado alguma rota ele retorna route.han
 
 - Feito essa validação, quando for necessário ter mais rotas basta apenas criar la dentro do
 objeto em routes.js
+
+# Route e Query parameters 
+
+ - Existem 3 formas do front end ou qualquer aplicação que estaja consumindo a api  enviar 
+ informações para a api, essas 3 formas são Query Parameters, Route Parameters e temos o 
+ Request Body. 
+
+ ## Query Parameters 
+ 
+ - São parametros nomeados que são enviados no próprio endereço da requisição por ex 
+ http://localhost:3333/users?userId=1 o userId é chamado de query parameter isso  por que
+ cada parametro enviado na url tem um nome (chave) e o valor que no caso do exemplo é 1 
+ também é possivelconcatenar com o & e colocar mais parametros. 
+
+ - São utilizados quando é necessário ter uma url que é Statefull , esse tipo de parametro 
+ é utilizado na url para enviar informações que não são sensiveis, que servem mais para 
+ modificar a resposta que o back end vai retornar, são muito utilizados para filtros, 
+ paginação, para essas coisas que modificam a resposta mas que muitas vezes não são 
+ obrigatórias. 
+
+ ## Route Parameters 
+
+ - São paramtros não nomeados que também ficam na rota http://localhost:3333/users/1 
+ note que tem um 1 e mais nenhum simbolo é como se fosse parte da rota, são usados 
+ para a identificação de recurso , int se eu uso essa rota com um get por ex eu entendo 
+ que estou buscando um usuario com id 1, note que fazemos uma combinação de método, recurso 
+ e Router Parameter para entender exatamente o quer que a rota quer dizer. 
+
+## Importante
+
+- Note que ambos os parameters que foram citados a cima NÃO  podem ser utilizados para 
+envio de informações sensiveis, como senhas ou dados sigilosos, por que nenhuma informação 
+enviada na url da requisição não é criptografado e por isso é muito fácil de interceptar. 
+
+## Request Bady 
+
+- Diferente dos outros dois é utilizado para envio de informações de um formulario epode 
+ser utilizado para envio de quantas informações forem necessárias, os dados enviados 
+no Request Bady passam pelo protocolo HTTPs e são muito mais dificeis de serem 
+descriptografados e interceptados. Ele não fica na url.
+
+- Entendendo esses conceitos é possivel agora criar as demais rotas para edição e remoção 
+du usuario.  
+
+- dentro do meu routes.js eu criei um novo registro de rota para a remoção de usuario. 
+Note que com esses conceitos conseguimos identificar que se queremos identificar um 
+usuario para deletar devemos utilizar o Route Paramters por que é necessário identificar
+um recurso através da rota. 
+
+ {
+    method: 'DELETE',
+    path: '/users/ID',
+    handler: (req, res) => {
+        return res.end()
+    },
+}
+
+
