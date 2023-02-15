@@ -1078,6 +1078,40 @@ export function extractQueryParams(query) {
     }, {})
 }
 
+# Filtrando Lista do banco de dados 
 
+- dentro do database dentro do método select, vamos adicionar um segundo parametro chamado search e 
+dentro do metodo eu monto um if para que se o search estiver preenchido eu vou passar data sendo 
+data passando um filter para filtrar, como o valor de data será alterado é importante que data 
+não seja mais uma const e sim uma let, dentro do filter eu utilizo row para percorrer todas as 
+linhas da tabela, no retorno eu vou  utilizar o Object.entries passando search para converter 
+esse objeto em um array para poder percorrer ele utilizando alguma estrutura de repetição, eu 
+utilzo um metodo chamado some que percorre um array e se pelo meno uma das vezes em que ele percorre 
+ele retornar true significa que aquele item do array deve ser incluido dentro do filter, dentro so 
+some eu desestruturo pegando chave e valor e retorno se da linha com a propriedade key inclue o 
+valor.
+
+select(table, search) {
+        let data = this.#database[table] ?? []
+
+        if (search) {
+            data = data.filter(row => {
+                return Object.entries(search).some(([key, value]) => {
+                    return row[key].includes(value)
+                })
+            })
+        }
+
+        return data
+    }
+
+## Object.entries 
+
+- O Object.entries faz o seguinte, eu tenho um objeto que com name e email por exemplo , quando 
+é utilizado nesse objeto ele cria um array com outros dois arrays dentro, e o primeiro e o segundo 
+indice de cada é a chave e o valor respectivamente; 
+
+{ name: "Danilo", email: "Danilo" } 
+[ ['name', 'Danilo'], ['email', 'Danilo'] ] 
 
  
