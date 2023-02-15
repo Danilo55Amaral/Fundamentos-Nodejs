@@ -995,6 +995,58 @@ seja significa que a requisição deu certo porém ela não retorna nehum conteu
     },
 },
 
+# Atualização de registros 
+
+- Funcionalidade de atualização de usuário, para isso eu crio uma nova rota no meu arquivo de rotas 
+com metodo PUT para atualizar todos os dados do usuário, o path continua recebendo o id do usuario 
+e dentro do bady dessa requisição eu pego os dados de nome e email que são os dados que quero 
+atualzar de um usuário.
+
+{
+        method: 'PUT',
+        path: buildRoutePath('/users/):id'),
+        handler: (req, res) => {
+            const { id } = req.params 
+            const { name, email } = req.body
+
+            database.update('users', id)
+ 
+            return res.writeHead(204).end()
+        },
+    },
+
+- Dentro do banco de dados foi criado uma função semelhante a função de delete que é a update que 
+também busca pelo rowIndex, nos parametros eu também recebo o dados do usuario e ao invés de fazer 
+o splice que remove eu vou fazer uma substituição por todos os dados, passo o id e copio os dados. 
+
+update(table, id, data) {
+    const rowIndex = this.#database[table].findIndex(row => row.id == id) 
+
+    if (rowIndex > -1) {
+        this.#database[table][rowIndex] = { id, ...data }
+        this.#persist()
+    }
+}
+
+- Vou utilizar na minha rota o update e passar como parametro além do id as informações que quero 
+que sejam alteradas no caso name e email.
+
+{
+        method: 'PUT',
+        path: buildRoutePath('/users/):id'),
+        handler: (req, res) => {
+            const { id } = req.params 
+            const { name, email } = req.body
+
+            database.update('users', id, {
+                name,
+                email,
+            })
+ 
+            return res.writeHead(204).end()
+        },
+    },
+
 
 
 
