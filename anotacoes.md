@@ -936,4 +936,66 @@ const routeParams = req.url.match(route.path)
 
 - Na nossa RegEx dentro do parenteses podemos colocar ?<> e o que for colocado dentro é o nome 
 que quero dá ao grupo ?<id> eu também posso colocar ?<$1> 
+
+# Remoção de registros 
+
+- Para conseguir acessar o id eu preciso pegar esses grupos das minhas rotas --> routeParams.groups
+eu crio um novo objeto copiando tudo que temos dentro de groups --->  { ...routeParams.groups } 
+e vou atribuir isso a req.params por que isso por que o req está sendo passado a frente no return 
+e temos acesso ao req dentro das rotas e isso deixa o processo muito mais fácil.
+
+req.params = { ...routeParams.groups }  
+
+- com isso eu posso testar dando um log dentro do arquivo de rotas e vemos que ele vai acessar o id 
+
+console.log(req.params) 
+
+- dentro de database eu crio um método chamado delete que recebe a tabela e o id do registro 
+ele vai verificar se essa informação existe no banco de dados , esse método vai percorrer cada um 
+dos registros de users cada item que tem dentro do array e procura se existe um usuário que tenha 
+um id igual ao id que quero deletar que é o id que recebo como paramtro nesse metodo.
+
+const rowIndex = this.#database[table].findIndex(row => row.id == id) 
+
+- Com essa informação em mãos eu posso montar um if se o rowIndex for maior que -1 (esse -1 é o que 
+ele retorna caso não encontre) ele vai setar com o this o #database na tabela que ele recebe como 
+parametro, vou utilizar um splice para remover no indice que foi procurado passando 1 para remover 
+uma linha dali de dentro.
+
+    if (rowIndex > -1) {
+        this.#database[table].splice(rowIndex, 1) 
+    }
+
+- Em seguida eu vou utilizar o método persist para persistir apenas se ele encontrar, esse metodo 
+persist vai salvar o banco de dados com a informação removida. 
+
+  delete(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id == id) 
+
+    if (rowIndex > -1) {
+        this.#database[table].splice(rowIndex, 1) 
+        this.#persist()
+    }
+}
+
+- Agora nas rotas eu posso ir no metodo Delete e finalizar ele, eu peguei o id que vem de req.params 
+e faço um database.delete passando a tabela users e o id. e no meu retorno eu posso retornar um  
+res.writeHead(204).end() o status code 204 é uma resposta de sucesso porém sem nenhum conteudo ou 
+seja significa que a requisição deu certo porém ela não retorna nehum conteudo. 
+
+{
+    method: 'DELETE',
+    path: buildRoutePath('/users/):id'),
+    handler: (req, res) => {
+        const { id } = req.params 
+
+        database.delete('users', id)
+ 
+        return res.writeHead(204).end()
+    },
+},
+
+
+
+
  
