@@ -885,3 +885,55 @@ rotas da aplicação.
 
 - Quando eu rodar o projeto no meu console vai ser retornada informações das rotas e as 
 que for encontrados com o Regex retornará as informações dentro de um array. 
+
+- Essa Regex foi escrita para encontrar parametros dinamicos dentro das path
+
+# Rotas com parâmetros (RegEx) 
+
+- Aqui trocamos todos os locais nas rotas em que tem dentro do path parametros dinamicos 
+por uma outra Regex que xonsegue aceitar qualquer campo que possa vim como valor no 
+parametro dinamico. 
+
+- Eu criei uma nova constante chamada pathWithParams onde eu faço um replaceAll para 
+encontrar na string path todos os locais onde se tem algum parametro dinamico e por isso 
+eu passo minha routeParametersRegex, eu vou subistituir por um string que é uma outra regex
+e dentro dela eu indico o que poderá ser incluído de texto no lugar do paramtro dinamico, 
+eu indiquei que quero que venha letras de a-z numeros de 0-9 e também os simbolos /-_ 
+estou indicando que tudo isso são coisas que podem vim na url. Também utilizo o + para indicar 
+que posso ter um ou mais caracteres que tenha essa formatação.
+
+const pathWithParams = path.replaceAll(routeParametersRegex, '([a-z0-9/-_]+)')
+
+- Em seguida eu criei uma nova RegExp passando uma interpolação e indico que preciso que a url 
+comece com ^${pathWithParams} por isso utilizei o sinal de ^ que indica que a string não pode 
+ter nada antes disso. 
+
+const pathRegex = new RegExp(`^${pathWithParams}`)
+
+return pathRegex
+
+- Dentro do meu server.js eu antes para encontrar a rota dentro do arquivos de rotas eu estava 
+comparando a igualdade se o método batia com o metodo que estava la e se o path que estava dentro
+do arquivo de rotas era igual a url que estava recebendo dentro da requisição,  porém agora vamos 
+modificar isso ao invés de verificar se ela é igual eu vou utilizar o metodo test() isso por que 
+dentro do arquivo de rotas estamos utilizando o metodo buildRoutePath que retorna uma RegExp 
+e toda Regex tem um metodo chamado test que retorna true ou false caso a string que está sendo 
+enviada seja válida ou não. dentro do metodo test eu passo a url. 
+
+const route = routes.find(route => {
+    return route.method == method && route.path.test(url)
+})
+
+- Eu estou testando se a Regex que foi a Regex criada bate com a url que está sendo recebida.
+
+- O que precisamos agora dentro da aplicação é obter esses dados que estão sendo gerados de forma 
+aleatórea dentro do id, para isso dentro do server.js dentro do if (route) que é se ele conseguiu 
+encontrar a rota, eu não quero mais só retornar um true ou false para validar, eu vou executar a 
+Regex vou utilizar um match na url para ele retornar quais foram os dados que a RegEx encontrou 
+dentro da rota. 
+
+const routeParams = req.url.match(route.path) 
+
+- Na nossa RegEx dentro do parenteses podemos colocar ?<> e o que for colocado dentro é o nome 
+que quero dá ao grupo ?<id> eu também posso colocar ?<$1> 
+ 
