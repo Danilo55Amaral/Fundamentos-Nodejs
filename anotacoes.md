@@ -1048,6 +1048,36 @@ que sejam alteradas no caso name e email.
     },
 
 
+# Capturando query parameters 
+
+- Geralmente são parametros opcionais feitos para paginação, filtragem entre outras coisas no exemplo 
+utilizamos essa parametro no mecanismo de busca do isomnia para testar, para isso é necessário 
+conseguir ecessar esses paramtros dentro das nossas rotas. 
+
+- Dentro do build-route-path dentro de pathRegex eu crio um novo grupo na Regex na qual chamei de 
+query, dentro eu defino que depois da url eu posso ter e por isso eu defino esse grupo como opcional 
+e para isso eu utilizo  o sinal de ? ao final isso significa que pode exixtir ou não na url, e após
+utilizo o $ para inficar que a url precisa terminar com essa verificação.    (?<query>\\?(.*))?$`) 
+
+const pathRegex = new RegExp(`^${pathWithParams}(?<query>\\?(.*))?$`)
+
+- Dentro da pasta utils eu crio um arquivo chamado extract-query-params.js dentro eu criei uma 
+função extractQueryParams que vai receber query ela vai retornar query.substr passando o valor 1
+para que o primeiro caractere seja desconsiderado, eu dei um splite passando & para que ele 
+transforme isso em um array, em seguida eu utilizo o reduce e dentro dele eu vou iniciar o reduce
+com um objeto vazio {} o reduce permite com que eu percorra o array e o transforme em outra coisa, 
+como paramtro eu vou ter o queryParamse param que é cada um dos paramtros.
+
+export function extractQueryParams(query) {
+    return query.substr(1).split('&').reduce((queryParams, param) => {
+        const [key, value] = param.split('=')
+
+        queryParams[key] = value 
+
+        return queryParams 
+    }, {})
+}
+
 
 
  
