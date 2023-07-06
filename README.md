@@ -18,5 +18,6 @@ se comporta por trás, também foi utilizados conceitos mais aprofundados como S
 - Middleware 
 - Criação de banco de dados com JSON 
 - Query Parameters
-- Rotas com parâmetros RegEx 
+- Rotas com parâmetros RegEx
+- Clean Code
 
